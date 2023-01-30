@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Data\Bar;
 use App\Data\Foo;
 use App\Data\Person;
+use App\Services\HelloService;
+use App\Services\HelloServicesIndonesia;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -88,6 +90,28 @@ class ServiceContainerTest extends TestCase
         $bar1 = $this->app->make(Bar::class);
         $bar2 = $this->app->make(Bar::class);
         self::assertSame($bar1,$bar2);
+
+    }
+
+    public function testHelloServise()
+    {
+        $this->app->singleton(HelloService::class,HelloServicesIndonesia::class);
+        $helloService= $this->app->make(HelloService::class);
+        $helloService2 = $this->app->make(HelloService::class);
+
+        self::assertEquals("Hello Riki",$helloService->hello("Riki"));
+        self::assertSame($helloService,$helloService2);
+
+    }
+
+    public function testInterfaceToClass()
+    {
+        $this->app->singleton(HelloService::class,function(){
+            return new HelloServicesIndonesia();
+        });
+
+        $helloService = $this->app->make(HelloService::class);
+        self::assertEquals("Hello Reza",$helloService->hello("Reza"));
 
     }
 
