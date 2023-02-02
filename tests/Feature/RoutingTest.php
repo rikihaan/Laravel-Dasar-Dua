@@ -63,5 +63,15 @@ class RoutingTest extends TestCase
 
     }
 
+    public function testRouteNamed()
+    {
+        $this->get('/produk/12345')
+            ->assertSeeText('http://localhost/products/12345');
+
+        $this->get('/produk-redirect/1234')
+            ->assertRedirect('products/1234');
+
+    }
+
 
 }
