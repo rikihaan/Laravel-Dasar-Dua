@@ -79,4 +79,41 @@ Route::get('/produk/{id}',function ($id){
 Route::get('/produk-redirect/{id}',function ($id){
  return redirect()->route('product.detail',['id'=>$id]);
 });
+//controller request
+Route::get('/controller/hello/request',[\App\Http\Controllers\HelloController::class,'request']);
 
+//Controller
+Route::get('/controller/hello',[\App\Http\Controllers\HelloController::class,'hello']);
+Route::get('/controller/hello/{name}',[\App\Http\Controllers\HelloController::class,'hello']);
+
+//Request Input
+Route::get('/input/hello',[\App\Http\Controllers\InputController::class,'hello']);
+Route::post('/input/hello',[\App\Http\Controllers\InputController::class,'hello']);
+
+// request input nested
+Route::post('/input/hello/nested',[\App\Http\Controllers\InputController::class,'helloNested']);
+
+
+// get request all
+Route::post('/input/hello/helloInput',[\App\Http\Controllers\InputController::class,'helloAllInput']);
+
+// input array
+Route::post('/input/hello/array',[\App\Http\Controllers\InputController::class,'arrayInput']);
+
+// input query
+Route::get('/input/hello/query',[\App\Http\Controllers\InputController::class,'inputQuery']);
+
+// input type
+Route::post('/input/hello/type',[\App\Http\Controllers\InputController::class,'inputType']);
+
+// filter onli
+Route::post('/input/hello/filterOnly',[\App\Http\Controllers\InputController::class,'filterOnly']);
+
+// filter Except
+Route::post('/input/hello/filterExcept',[\App\Http\Controllers\InputController::class,'filterExcept']);
+
+// filter merge
+Route::post('/input/hello/merge',[\App\Http\Controllers\InputController::class,'filterMerge']);
+
+// upload file
+Route::post('/file/upload',[\App\Http\Controllers\FileUploadController::class,'upload']);
