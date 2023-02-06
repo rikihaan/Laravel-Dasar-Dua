@@ -116,4 +116,56 @@ Route::post('/input/hello/filterExcept',[\App\Http\Controllers\InputController::
 Route::post('/input/hello/merge',[\App\Http\Controllers\InputController::class,'filterMerge']);
 
 // upload file
-Route::post('/file/upload',[\App\Http\Controllers\FileUploadController::class,'upload']);
+Route::post('/file/upload',[\App\Http\Controllers\FileUploadController::class,'upload'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+
+// response
+Route::get('/response/hello',[\App\Http\Controllers\ResponseController::class,'response']);
+
+// response with header
+Route::get('response/header',[\App\Http\Controllers\ResponseController::class,'header']);
+
+// response view
+Route::get('/response/type/view',[\App\Http\Controllers\ResponseController::class,'responseView']);
+// response json
+Route::get('/response/type/json',[\App\Http\Controllers\ResponseController::class,'responseJson']);
+//response file
+Route::get('/response/type/file',[\App\Http\Controllers\ResponseController::class,'responseFile']);
+Route::get('/response/type/download',[\App\Http\Controllers\ResponseController::class,'responseDownload']);
+
+//cookie
+Route::get('/cookie/set',[\App\Http\Controllers\CookieController::class,'createCookie']);
+// get cookie
+Route::get('/cookie/get',[\App\Http\Controllers\CookieController::class,'getCookie']);
+
+// clear cookie
+Route::get('/cookie/clear',[\App\Http\Controllers\CookieController::class,'clearCookie']);
+
+// redirect
+Route::get('/redirect/from',[\App\Http\Controllers\RedirectController::class,'redirectFrom']);
+Route::get('/redirect/to',[\App\Http\Controllers\RedirectController::class,'redirectTo']);
+
+// redirect name
+Route::get('/redirect/name/',[\App\Http\Controllers\RedirectController::class,'redirectName']);
+
+Route::get('/redirect/hello/{name}',[\App\Http\Controllers\RedirectController::class,'redirectHello'])
+    ->name('redirect-hello');
+
+// redirect actiion controller
+Route::get('/redirect/action',[\App\Http\Controllers\RedirectController::class,'redirectActionController']);
+
+// redirect external (Away)
+Route::get('redirect/away',[\App\Http\Controllers\RedirectController::class,'redirectAway']);
+
+//route middleware
+Route::get('/middleware/api',function (){
+    return "Success";
+})->middleware(['sample:riki, 401']);
+
+// crsf form request
+Route::get('/form',[\App\Http\Controllers\FormController::class,'form']);
+Route::post('/form',[\App\Http\Controllers\FormController::class,'formSubmit']);
+
+// curren URL
+Route::get('/url/current', function (){
+  return \Illuminate\Support\Facades\URL::full();
+});
